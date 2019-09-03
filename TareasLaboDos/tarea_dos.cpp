@@ -37,6 +37,36 @@ class Cola{
 			}
 		}
 		
+		int promedioCola(){
+			Nodo *temp = inicio;
+			int suma = 0, datos = 0;
+			//int promedio;
+			if(!inicio){
+				return 0;
+				
+			}else{
+				while(temp){
+					suma += temp->dato;
+					datos++;
+					temp = temp -> sig;
+				}
+			}
+			
+			return suma/datos;
+		}
+		
+		int sizeCola(){
+			Nodo *temp = inicio;
+			int datos = 0;
+			
+			while(temp){
+				temp = temp -> sig;
+				datos++;
+			}
+			
+			return datos;
+		}
+		
 		void push(int valor){
 			Nodo *n = crearNodo(valor);
 			
@@ -47,6 +77,18 @@ class Cola{
 				fin -> sig = n;
 				fin = n;
 			}
+		}
+		
+		int obtenerDatoEnPosicion(int pos){
+			Nodo *temp = inicio;
+			int i = 0;
+			
+			while(i != pos && temp){
+				temp = temp -> sig;
+				i++;
+			}
+			
+			return temp->dato;
 		}
 		
 		void pop(){
@@ -65,12 +107,23 @@ class Cola{
 int main(){
 	
 	Cola cola;
+	Cola cola2;
 	
-	cola.push(2);
+	cola.push(10);
+	cola.push(20);
+	cola.push(15);
+	cola.push(1);
 	cola.push(3);
+	cola.push(12);
 	
-	cola.pop();
+	int promedio = cola.promedioCola();
 	
-	cola.mostrarCola();
+	for(int i = 0; i < cola.sizeCola();i++){
+		if(cola.obtenerDatoEnPosicion(i) % promedio == 0){
+			cola2.push(cola.obtenerDatoEnPosicion(i));
+		}
+	}
+	
+	cola2.mostrarCola();
 	
 }
