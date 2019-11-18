@@ -98,6 +98,37 @@ struct node* devolverAncestroComun(struct node *root, int a, int b){
 		return devolverAncestroComun(root -> right ,a,b);
 	}
 }
+
+int distanciaHastaUnNodo(struct node *root,int a){
+	if(root -> key == a){
+		return 0;
+	}else{
+		if(root -> key > a){
+			return 1 + distanciaHastaUnNodo(root -> left, a);
+		}else{
+			return 1 + distanciaHastaUnNodo(root -> right, a);
+		}
+	}
+}
+
+int distanciaNodos(struct node *root, int a, int b){
+	
+	/*if(root -> key == a || root -> key == b ){
+		return 0;
+	}*/
+	
+	if(root -> key > a && root -> key > b){
+		
+		return distanciaNodos(root -> left,a,b);
+	}else if(root -> key < a && root -> key < b){
+		
+		return distanciaNodos(root -> right,a,b);
+	}else if(root -> key > a && root -> key < b){
+		
+		return distanciaHastaUnNodo(root, a) + distanciaHastaUnNodo(root, b);
+	}
+}
+
 // Driver Program to test above functions
 int main(){
 	/* Let us create following BST
@@ -120,7 +151,9 @@ int main(){
 	node* comun = devolverAncestroComun(root, 20,40);
 	
 	
-	cout<<endl<<"Ancestro comun: "<<comun->key;
+	cout<<endl<<"Ancestro comun: "<<comun->key<<endl;
+	
+	cout<<"Distancia entre dos nodos: "<<distanciaNodos(root,30,70);
 	
 	/*cout<<endl;
 	
