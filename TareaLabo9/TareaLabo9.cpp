@@ -1,6 +1,9 @@
 // C program to demonstrate delete operation in binary search tree
 #include<stdio.h>
 #include<stdlib.h>
+#include<iostream>
+
+using namespace std;
 struct node{
 	int key;
 	struct node *left, *right;
@@ -80,6 +83,21 @@ struct node* deleteNode(struct node* root, int key){
 	}
 	return root;
 }
+
+struct node* devolverAncestroComun(struct node *root, int a, int b){
+	
+	if(root -> key > a && root -> key < b){
+		return root;
+	}
+	
+	if(root -> key > a && root -> key > b){
+		return devolverAncestroComun(root -> left,a,b);
+	}
+	
+	if(root -> key < a && root -> key < b){
+		return devolverAncestroComun(root -> right ,a,b);
+	}
+}
 // Driver Program to test above functions
 int main(){
 	/* Let us create following BST
@@ -98,5 +116,16 @@ int main(){
 	root = insert(root, 80);
 	printf("Inorder traversal of the given tree \n");
 	inorder(root);
+	
+	node* comun = devolverAncestroComun(root, 20,40);
+	
+	
+	cout<<endl<<"Ancestro comun: "<<comun->key;
+	
+	/*cout<<endl;
+	
+	deleteNode(root,70);
+	
+	inorder(root);*/
 	return 0;
 }
